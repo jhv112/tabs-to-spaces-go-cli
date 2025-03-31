@@ -27,15 +27,15 @@ func NewTabConverters(tabsize int) []TabConverter {
 	}
 
 	// assures that tabsize is nonnegative
-	regexConverters := make([]TabConverter, tabsize)
+	converters := make([]TabConverter, tabsize)
 
-	for i, converter := range regexConverters {
-		converter.Matcher = regexp.MustCompile(fmt.Sprintf(`(^(?:[^\t]{%d})*[^\t]{%d})\t`, tabsize, i))
+	for i := 0; i < tabsize; i++ {
+		converters[i].Matcher = regexp.MustCompile(fmt.Sprintf(`(^(?:[^\t]{%d})*[^\t]{%d})\t`, tabsize, i))
 		// assurance from: https://stackoverflow.com/questions/43586091/a/43586154
-		converter.Replace = "$1" + strings.Repeat(" ", tabsize-i)
+		converters[i].Replace = "$1" + strings.Repeat(" ", tabsize-i)
 	}
 
-	return regexConverters
+	return converters
 }
 
 // While tabs exist in text, modify text in order of tabConverters occurence

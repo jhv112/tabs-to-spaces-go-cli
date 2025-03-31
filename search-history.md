@@ -26,3 +26,4 @@ history during development:
 - [go.mod file reference - The Go Programming Language](https://go.dev/doc/modules/gomod-ref)
 - [Module version numbering - The Go Programming Language](https://go.dev/doc/modules/version-numbers)
 - [Publishing a module - The Go Programming Language](https://go.dev/doc/modules/publishing)
+- [testing - How to `go test` all tests in my project? - Stack Overflow](https://stackoverflow.com/questions/16353016)
