@@ -27,3 +27,5 @@ history during development:
 - [Module version numbering - The Go Programming Language](https://go.dev/doc/modules/version-numbers)
 - [Publishing a module - The Go Programming Language](https://go.dev/doc/modules/publishing)
 - [testing - How to `go test` all tests in my project? - Stack Overflow](https://stackoverflow.com/questions/16353016)
+- [Unmatchable caret in regular expression — CodeQL query help documentation](https://codeql.github.com/codeql-query-help/python/py-regex-unmatchable-caret/)
+- [regular expression tables, caret ^ not woking? - Affinity on Desktop Questions (macOS and Windows) - Affinity | Forum](https://forum.affinity.serif.com/index.php?/topic/202156-regular-expression-tables-caret-not-woking/)

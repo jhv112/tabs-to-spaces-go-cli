@@ -30,7 +30,7 @@ func NewTabConverters(tabsize int) []TabConverter {
 	converters := make([]TabConverter, tabsize)
 
 	for i := 0; i < tabsize; i++ {
-		converters[i].Matcher = regexp.MustCompile(fmt.Sprintf(`(^(?:[^\t]{%d})*[^\t]{%d})\t`, tabsize, i))
+		converters[i].Matcher = regexp.MustCompile(fmt.Sprintf(`((?:\n|^)(?:[^\t]{%d})*[^\t]{%d})\t`, tabsize, i))
 		// assurance from: https://stackoverflow.com/questions/43586091/a/43586154
 		converters[i].Replace = "$1" + strings.Repeat(" ", tabsize-i)
 	}
