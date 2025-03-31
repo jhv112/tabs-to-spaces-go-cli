@@ -10,7 +10,7 @@ func TestNewTabConverters(t *testing.T) {
 		expected []expected
 	}{
 		// just remove all tabs
-		{0, []expected{{`\t`, "$1"}}},
+		{0, []expected{{`\t+`, "$1"}}},
 		{1, []expected{
 			{`((?:\n|^)(?:[^\t]{1})*[^\t]{0})\t`, "$1 "},
 		}},

@@ -23,7 +23,7 @@ type TabConverter struct {
 func NewTabConverters(tabsize int) []TabConverter {
 	// special case
 	if tabsize == 0 {
-		return []TabConverter{{regexp.MustCompile(`\t`), "$1"}}
+		return []TabConverter{{regexp.MustCompile(`\t+`), "$1"}}
 	}
 
 	// assures that tabsize is nonnegative

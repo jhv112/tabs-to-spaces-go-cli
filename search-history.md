@@ -18,7 +18,7 @@ history during development:
 - [system - How to find out the number of CPUs in Go lang? - Stack Overflow](https://stackoverflow.com/questions/24073697)
 - [flag package - flag - Go Packages](https://pkg.go.dev/flag)
 - [Tutorial: Create a Go module - The Go Programming Language](https://go.dev/doc/tutorial/create-module)
-- [https://go.dev/doc/modules/developing#workflow](https://go.dev/doc/modules/developing)
+- [Developing and publishing modules - The Go Programming Language](https://go.dev/doc/modules/developing)
 - [Managing module source - The Go Programming Language](https://go.dev/doc/modules/managing-source)
 - [Go failing - expected 'package', found 'EOF' - Stack Overflow](https://stackoverflow.com/questions/31110191)
 - [go mod: cannot find module providing package - Stack Overflow](https://stackoverflow.com/questions/55631569)
