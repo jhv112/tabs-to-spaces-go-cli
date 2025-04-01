@@ -23,11 +23,13 @@ func recurseThroughDirs(
 
 	for _, entry := range entries {
 		if entry.IsDir() {
-			return recurseThroughDirs(filepath.Join(dirPath, entry.Name()), filter, outChan)
-		}
+			err = recurseThroughDirs(filepath.Join(dirPath, entry.Name()), filter, outChan)
 
-		if filter.MatchString(entry.Name()) {
-			outChan <- entry.Name()
+			if err != nil {
+				return err
+			}
+		} else if filter.MatchString(entry.Name()) {
+			outChan <- filepath.Join(dirPath, entry.Name())
 		}
 
 		// else ignore
@@ -86,26 +88,11 @@ func processFile(filepath string, fileModifier func(string) string) error {
 func processFiles(
 	fileModifier func(input string) string,
 	filepathChannel <-chan string,
-	stopSignal <-chan struct{},
 ) {
-	for {
-		_, stop := <-stopSignal
-
-		if stop {
-			break
-		}
-
-		for {
-			filepath, ok := <-filepathChannel
-
-			if !ok {
-				break
-			}
-
-			if err := processFile(filepath, fileModifier); err != nil {
-				// ???
-				log.Panic(err)
-			}
+	for filepath := range filepathChannel {
+		if err := processFile(filepath, fileModifier); err != nil {
+			// ???
+			log.Panic(err)
 		}
 	}
 }

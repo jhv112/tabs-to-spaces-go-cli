@@ -87,11 +87,6 @@ func main() {
 
 	tabConverters := tabconv.NewTabConverters(int(args.tabsize))
 	filepathChannel := make(chan string)
-	stopSignal := make(chan struct{})
-
-	defer func() {
-		stopSignal <- struct{}{}
-	}()
 
 	// from: https://stackoverflow.com/questions/24073697/a/24073875
 	processorCount := runtime.NumCPU()
@@ -101,7 +96,7 @@ func main() {
 	}
 
 	for i := 0; i < processorCount; i++ {
-		go processFiles(fileModifier, filepathChannel, stopSignal)
+		go processFiles(fileModifier, filepathChannel)
 	}
 
 	err = recurseThroughDirs(args.startdir, args.filter, filepathChannel)
@@ -109,4 +104,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	close(filepathChannel)
 }
