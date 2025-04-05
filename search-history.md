@@ -39,3 +39,8 @@ history during development:
 - [Select & For Range Channel in Go: Breaking Down](https://blog.devtrovert.com/p/select-and-for-range-channel-i-bet)
 - [go - Why is my Golang Channel Write Blocking Forever? - Stack Overflow](https://stackoverflow.com/questions/37439776)
 - [operating system - How to reliably detect os/platform in Go - Stack Overflow](https://stackoverflow.com/questions/19847594)
+- [Replace the content of a textfile with a regex in powershell - Stack Overflow](https://stackoverflow.com/questions/16250258)
+- [about_Regular_Expressions - PowerShell | Microsoft Learn](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_regular_expressions)
+- [Get-ChildItem (Microsoft.PowerShell.Management) - PowerShell | Microsoft Learn](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem)
+- [Powershell: Setting Encoding for Get-Content Pipeline - Stack Overflow](https://stackoverflow.com/questions/76482)
+- [encoding - Using PowerShell to write a file in UTF-8 without the BOM - Stack Overflow](https://stackoverflow.com/questions/5596982)
