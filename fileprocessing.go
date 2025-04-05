@@ -1,13 +1,14 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
 	"io"
 	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
 	"regexp"
-	"strings"
 )
 
 func recurseThroughDirs(
@@ -39,17 +40,23 @@ func recurseThroughDirs(
 }
 
 func readFileContents(file *os.File) (string, error) {
-	// from: https://stackoverflow.com/questions/48596338/a/58508195
-	var buf strings.Builder
+	var buffer bytes.Buffer
 
-	_, err := io.Copy(&buf, file)
+	bytesRead, err := io.Copy(&buffer, file)
 
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return "", err
 	}
 
-	// assuming utf8
-	return buf.String(), nil
+	if bytesRead != 0 && bytesRead != int64(buffer.Len()) {
+		return "", fmt.Errorf(
+			"expected to read %d bytes, read %d bytes instead",
+			buffer.Len(),
+			bytesRead,
+		)
+	}
+
+	return buffer.String(), nil
 }
 
 func processFile(filepath string, fileModifier func(string) string) error {

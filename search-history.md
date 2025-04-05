@@ -46,3 +46,6 @@ history during development:
 - [encoding - Using PowerShell to write a file in UTF-8 without the BOM - Stack Overflow](https://stackoverflow.com/questions/5596982)
 - [Organizing a Go module - The Go Programming Language](https://go.dev/doc/modules/layout)
 - [Defer, Panic, and Recover - The Go Programming Language](https://go.dev/blog/defer-panic-and-recover)
+- [utf8 package - unicode/utf8 - Go Packages](https://pkg.go.dev/unicode/utf8)
+- [How to get file length in Go? - Stack Overflow](https://stackoverflow.com/questions/17133590)
+- [How can I read a whole file into a string variable - Stack Overflow](https://stackoverflow.com/questions/13514184)

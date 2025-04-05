@@ -132,3 +132,48 @@ func TestRecurseThroughDirs(t *testing.T) {
 		t.Fatalf("want %s files, have %s files", strings.Join(expectedFiles, ";"), strings.Join(observedFiles, ";"))
 	}
 }
+
+func setupTempFileWithContent(content string) (*os.File, error) {
+	file, err := os.CreateTemp(os.TempDir(), "")
+
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = file.WriteString(content)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// to read from beginning and not fromlast append
+	file.Seek(0, 0)
+
+	return file, nil
+}
+
+const utf8String = "Hello, 世界"
+
+func TestReadFileContents(t *testing.T) {
+	file, err := setupTempFileWithContent(utf8String)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	defer func() {
+		// required; otherwise file cannot be removed
+		file.Close()
+		os.Remove(file.Name())
+	}()
+
+	observed, err := readFileContents(file)
+
+	if err != nil {
+		t.Fatalf("want no error, have %v", err)
+	}
+
+	if observed != utf8String {
+		t.Fatalf("want \"%s\", have \"%s\"", utf8String, observed)
+	}
+}
