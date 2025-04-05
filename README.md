@@ -13,9 +13,8 @@ convert tabs to spaces, is not lost on me.
 
 ## Warning
 
-No tests have been written.
 Program has never been run.
-It compiles -- that's all I can guarantee.
+It compiles, and there are tests -- that's all I can guarantee.
 
 ## Usage
 

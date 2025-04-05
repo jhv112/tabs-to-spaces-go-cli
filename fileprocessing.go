@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"io/fs"
 	"log"
@@ -39,21 +38,14 @@ func recurseThroughDirs(
 	return nil
 }
 
+// Read open file from current seek position to end
 func readFileContents(file *os.File) (string, error) {
 	var buffer bytes.Buffer
 
-	bytesRead, err := io.Copy(&buffer, file)
+	_, err := io.Copy(&buffer, file)
 
 	if err != nil && err != io.EOF {
 		return "", err
-	}
-
-	if bytesRead != 0 && bytesRead != int64(buffer.Len()) {
-		return "", fmt.Errorf(
-			"expected to read %d bytes, read %d bytes instead",
-			buffer.Len(),
-			bytesRead,
-		)
 	}
 
 	return buffer.String(), nil
@@ -70,6 +62,12 @@ func processFile(filepath string, fileModifier func(string) string) error {
 	defer file.Close()
 
 	fileContents, err := readFileContents(file)
+
+	if err != nil {
+		return err
+	}
+
+	_, err = file.Seek(0, 0)
 
 	if err != nil {
 		return err

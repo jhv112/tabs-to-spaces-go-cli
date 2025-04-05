@@ -177,3 +177,36 @@ func TestReadFileContents(t *testing.T) {
 		t.Fatalf("want \"%s\", have \"%s\"", utf8String, observed)
 	}
 }
+
+func TestProcessFile(t *testing.T) {
+	const initial = utf8String
+	file, err := setupTempFileWithContent(initial)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	file.Close()
+
+	defer os.Remove(file.Name())
+
+	const expected = initial + " 2"
+
+	err = processFile(file.Name(), func(_ string) string { return expected })
+
+	if err != nil {
+		t.Fatalf("want no error, have %v", err)
+	}
+
+	fileBytes, err := os.ReadFile(file.Name())
+
+	if err != nil {
+		t.Fatalf("want no error, have %v", err)
+	}
+
+	observed := string(fileBytes)
+
+	if observed != expected {
+		t.Fatalf("want \"%s\", have \"%s\"", expected, observed)
+	}
+}
