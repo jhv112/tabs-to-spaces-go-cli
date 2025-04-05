@@ -44,3 +44,5 @@ history during development:
 - [Get-ChildItem (Microsoft.PowerShell.Management) - PowerShell | Microsoft Learn](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem)
 - [Powershell: Setting Encoding for Get-Content Pipeline - Stack Overflow](https://stackoverflow.com/questions/76482)
 - [encoding - Using PowerShell to write a file in UTF-8 without the BOM - Stack Overflow](https://stackoverflow.com/questions/5596982)
+- [Organizing a Go module - The Go Programming Language](https://go.dev/doc/modules/layout)
+- [Defer, Panic, and Recover - The Go Programming Language](https://go.dev/blog/defer-panic-and-recover)

@@ -10,9 +10,11 @@ func TestNewTabConverters(t *testing.T) {
 		expected []expected
 	}{
 		// just remove all tabs
-		{0, []expected{{`\t+`, "$1"}}},
-		{1, []expected{
-			{`((?:\n|^)(?:[^\t]{1})*[^\t]{0})\t`, "$1 "},
+		{0, []expected{{`\t+`, ""}}},
+		{1, []expected{{`\t`, " "}}},
+		{2, []expected{
+			{`((?:\n|^)(?:[^\t]{2})*[^\t]{0})\t`, "$1  "},
+			{`((?:\n|^)(?:[^\t]{2})*[^\t]{1})\t`, "$1 "},
 		}},
 		{4, []expected{
 			{`((?:\n|^)(?:[^\t]{4})*[^\t]{0})\t`, "$1    "},
@@ -39,6 +41,16 @@ func TestNewTabConverters(t *testing.T) {
 			}
 		}
 	}
+}
+
+func TestNewTabConvertersFailOnNegativeTabsize(t *testing.T) {
+	defer func() {
+		if recover() == nil {
+			t.Fail()
+		}
+	}()
+
+	NewTabConverters(-1)
 }
 
 func newConverterRange(maxTabSize int) [][]TabConverter {
