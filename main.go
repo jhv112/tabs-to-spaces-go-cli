@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"log"
 	"os"
@@ -13,21 +14,8 @@ import (
 	"github.com/jhv112/tabs-to-spaces-go-cli/tabconv"
 )
 
-const usage = `
-
-Description:
-
-    Command-line utility that replaces tabs in certain files with spaces
-
-Command-line arguments:
-
-    | flag       | description        | implementation | default |
-    |:-----------|:-------------------|:--------------:|:-------:|
-    | --filter   | file filter        |  regex filter  |    .*   |
-    | --startdir | start directory    |  relative dir  |    .    |
-    | --tabsize  | tab size in spaces |  range [0,127] |    4    |
-
-`
+//go:embed USAGE
+var usage string
 
 type Args struct {
 	filter   *regexp.Regexp

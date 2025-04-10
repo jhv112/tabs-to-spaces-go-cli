@@ -1,0 +1,14 @@
+
+
+Description:
+
+    Command-line utility that replaces tabs in certain files with spaces
+
+Command-line arguments:
+
+    | flag       | description        | implementation | default |
+    |:-----------|:-------------------|:--------------:|:-------:|
+    | --filter   | file filter        |  regex filter  |    .*   |
+    | --startdir | start directory    |  relative dir  |    .    |
+    | --tabsize  | tab size in spaces |  range [0,127] |    4    |
+
