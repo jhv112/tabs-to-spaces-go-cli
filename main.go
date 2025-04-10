@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"runtime"
 	"slices"
 	"strconv"
 	"strings"
@@ -74,6 +73,27 @@ func parseArgs(argsStrings []string) (args Args, err error) {
 	return
 }
 
+func convertTabsToSpacesInDirectory(
+	filter *regexp.Regexp,
+	startdir string,
+	tabsize int,
+) error {
+	tabConverters := tabconv.NewTabConverters(tabsize)
+
+	fileModifier := func(input string) string {
+		return tabconv.ConvertTabsIn(input, tabConverters)
+	}
+
+	return produceSyncConsumeAsync(
+		func(ch chan<- string) error {
+			return recurseThroughDirs(startdir, filter, ch)
+		},
+		func(ch <-chan string) {
+			processFiles(fileModifier, ch)
+		},
+	)
+}
+
 func main() {
 	args, err := parseArgs(os.Args)
 
@@ -81,25 +101,13 @@ func main() {
 		log.Fatal(err.Error() + usage)
 	}
 
-	tabConverters := tabconv.NewTabConverters(int(args.tabsize))
-	filepathChannel := make(chan string)
-
-	// from: https://stackoverflow.com/questions/24073697/a/24073875
-	processorCount := runtime.NumCPU()
-
-	fileModifier := func(input string) string {
-		return tabconv.ConvertTabsIn(input, tabConverters)
-	}
-
-	for i := 0; i < processorCount; i++ {
-		go processFiles(fileModifier, filepathChannel)
-	}
-
-	err = recurseThroughDirs(args.startdir, args.filter, filepathChannel)
+	err = convertTabsToSpacesInDirectory(
+		args.filter,
+		args.startdir,
+		int(args.tabsize),
+	)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	close(filepathChannel)
 }

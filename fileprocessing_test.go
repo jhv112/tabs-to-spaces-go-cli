@@ -146,7 +146,7 @@ func setupTempFileWithContent(content string) (*os.File, error) {
 		return nil, err
 	}
 
-	// to read from beginning and not fromlast append
+	// to read from beginning and not from last append
 	file.Seek(0, 0)
 
 	return file, nil
