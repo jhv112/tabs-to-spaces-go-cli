@@ -54,3 +54,5 @@ history during development:
 - [multithreading - GoLang program executing on single thread even with GOMAXPROCS(4) - Stack Overflow](https://stackoverflow.com/questions/33936193)
 - [multithreading - Go ignores GOMAXPROCS - Stack Overflow](https://stackoverflow.com/questions/28674897)
 - [go - Forcing goroutines into the same thread - Stack Overflow](https://stackoverflow.com/questions/1880262)
+- [ErrorLevel equivalent - PowerShell Team](https://devblogs.microsoft.com/powershell/errorlevel-equivalent)
+- [Teleprinter - Wikipedia](https://en.wikipedia.org/wiki/Teleprinter#History)

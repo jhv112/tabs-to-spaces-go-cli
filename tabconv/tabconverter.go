@@ -16,8 +16,8 @@ import (
 //	/(^(?:[^\t]{4})*[^\t]{2})\t/ug → "$1  "
 //	/(^(?:[^\t]{4})*[^\t]{3})\t/ug → "$1 "
 type TabConverter struct {
-	Matcher *regexp.Regexp
-	Replace string
+	matcher *regexp.Regexp
+	replace string
 }
 
 func NewTabConverters(tabsize int) []TabConverter {
@@ -35,9 +35,9 @@ func NewTabConverters(tabsize int) []TabConverter {
 	converters := make([]TabConverter, tabsize)
 
 	for i := 0; i < tabsize; i++ {
-		converters[i].Matcher = regexp.MustCompile(fmt.Sprintf(`((?:\n|^)(?:[^\t]{%d})*[^\t]{%d})\t`, tabsize, i))
+		converters[i].matcher = regexp.MustCompile(fmt.Sprintf(`((?:\r\n|\r|\n|^)(?:[^\t\r\n]{%d})*[^\t\r\n]{%d})\t`, tabsize, i))
 		// assurance from: https://stackoverflow.com/questions/43586091/a/43586154
-		converters[i].Replace = "$1" + strings.Repeat(" ", tabsize-i)
+		converters[i].replace = "$1" + strings.Repeat(" ", tabsize-i)
 	}
 
 	return converters
@@ -47,7 +47,7 @@ func NewTabConverters(tabsize int) []TabConverter {
 func ConvertTabsIn(text string, tabConverters []TabConverter) string {
 	for strings.ContainsRune(text, '\t') {
 		for _, converter := range tabConverters {
-			text = converter.Matcher.ReplaceAllString(text, converter.Replace)
+			text = converter.matcher.ReplaceAllString(text, converter.replace)
 		}
 	}
 

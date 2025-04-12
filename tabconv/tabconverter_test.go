@@ -11,16 +11,17 @@ func TestNewTabConverters(t *testing.T) {
 	}{
 		// just remove all tabs
 		{0, []expected{{`\t+`, ""}}},
+		// replace each tab one-to-one with a space
 		{1, []expected{{`\t`, " "}}},
 		{2, []expected{
-			{`((?:\n|^)(?:[^\t]{2})*[^\t]{0})\t`, "$1  "},
-			{`((?:\n|^)(?:[^\t]{2})*[^\t]{1})\t`, "$1 "},
+			{`((?:\r\n|\r|\n|^)(?:[^\t\r\n]{2})*[^\t\r\n]{0})\t`, "$1  "},
+			{`((?:\r\n|\r|\n|^)(?:[^\t\r\n]{2})*[^\t\r\n]{1})\t`, "$1 "},
 		}},
 		{4, []expected{
-			{`((?:\n|^)(?:[^\t]{4})*[^\t]{0})\t`, "$1    "},
-			{`((?:\n|^)(?:[^\t]{4})*[^\t]{1})\t`, "$1   "},
-			{`((?:\n|^)(?:[^\t]{4})*[^\t]{2})\t`, "$1  "},
-			{`((?:\n|^)(?:[^\t]{4})*[^\t]{3})\t`, "$1 "},
+			{`((?:\r\n|\r|\n|^)(?:[^\t\r\n]{4})*[^\t\r\n]{0})\t`, "$1    "},
+			{`((?:\r\n|\r|\n|^)(?:[^\t\r\n]{4})*[^\t\r\n]{1})\t`, "$1   "},
+			{`((?:\r\n|\r|\n|^)(?:[^\t\r\n]{4})*[^\t\r\n]{2})\t`, "$1  "},
+			{`((?:\r\n|\r|\n|^)(?:[^\t\r\n]{4})*[^\t\r\n]{3})\t`, "$1 "},
 		}},
 	}
 
@@ -32,12 +33,12 @@ func TestNewTabConverters(t *testing.T) {
 		}
 
 		for i := range observed {
-			if observed[i].Matcher.String() != testCase.expected[i].regex {
-				t.Fatalf("want /%s/, have /%s/", testCase.expected[i].regex, observed[i].Matcher.String())
+			if observed[i].matcher.String() != testCase.expected[i].regex {
+				t.Fatalf("want /%s/, have /%s/", testCase.expected[i].regex, observed[i].matcher.String())
 			}
 
-			if observed[i].Replace != testCase.expected[i].replace {
-				t.Fatalf("want /%s/, have /%s/", testCase.expected[i].regex, observed[i].Matcher.String())
+			if observed[i].replace != testCase.expected[i].replace {
+				t.Fatalf("want /%s/, have /%s/", testCase.expected[i].regex, observed[i].matcher.String())
 			}
 		}
 	}
