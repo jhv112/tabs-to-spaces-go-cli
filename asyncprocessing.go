@@ -11,13 +11,13 @@ func produceSyncConsumeAsync[T any](
 	produce func(chan<- T) error,
 	consume func(<-chan T),
 ) error {
+	var wg sync.WaitGroup
 	ch := make(chan T)
 
-	defer close(ch)
-
-	var wg sync.WaitGroup
-
-	defer wg.Wait()
+	defer func() {
+		close(ch)
+		wg.Wait()
+	}()
 
 	consumeAsync := func() {
 		defer wg.Done()
