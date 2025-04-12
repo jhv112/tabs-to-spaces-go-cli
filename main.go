@@ -23,27 +23,33 @@ type Args struct {
 	tabsize  int8
 }
 
-// I know: Not the go way, to do it.
+// I know: Not the Go way, to do it.
 func parseArgs(argsStrings []string) (args Args, err error) {
+	currentDirAbsolutePath, err := filepath.Abs(".")
+
+	if err != nil {
+		return Args{}, err
+	}
+
 	// defaults
-	args = Args{regexp.MustCompile(".*"), ".", 4}
+	args = Args{regexp.MustCompile(".*"), currentDirAbsolutePath, 4}
 
 	for _, arg := range argsStrings[1:] {
-		if strings.HasPrefix(arg, "--filter=") {
-			args.filter, err = regexp.Compile(arg[len("--filter="):])
+		if argPrefix := "--filter="; strings.HasPrefix(arg, argPrefix) {
+			args.filter, err = regexp.Compile(arg[len(argPrefix):])
 
 			if err != nil {
 				return Args{}, err
 			}
-		} else if strings.HasPrefix(arg, "--startdir=") {
+		} else if argPrefix := "--startdir="; strings.HasPrefix(arg, argPrefix) {
 			// from: https://stackoverflow.com/questions/45941821/a/64499397
-			args.startdir, err = filepath.Abs(arg[len("--startdir="):])
+			args.startdir, err = filepath.Abs(arg[len(argPrefix):])
 
 			if err != nil {
 				return Args{}, err
 			}
-		} else if strings.HasPrefix(arg, "--tabsize=") {
-			parsedUint, err := strconv.ParseUint(arg[len("--tabsize="):], 10, 7)
+		} else if argPrefix := "--tabsize="; strings.HasPrefix(arg, argPrefix) {
+			parsedUint, err := strconv.ParseUint(arg[len(argPrefix):], 10, 7)
 
 			if err != nil {
 				return Args{}, err

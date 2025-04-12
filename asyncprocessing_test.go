@@ -11,8 +11,10 @@ func busyLoopFor(d time.Duration) {
 	}
 }
 
+// No idea, whether this actually works.
+// It's supposed to test, whether or not a single processor (preferably a
+// single thread) can be used for all coroutines.
 func disabledTestRunsOnSingleThread(t *testing.T) {
-	// no idea, whether this actually works
 	runtime.GOMAXPROCS(1)
 	runtime.LockOSThread()
 

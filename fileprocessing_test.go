@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 	"regexp"
 	"slices"
 	"strings"
@@ -63,8 +64,27 @@ func setupTestFileSystem() (string, error) {
 	return rootDirPath, nil
 }
 
+func adaptPathsForOS(unixPaths []string) []string {
+	if len(unixPaths) == 0 {
+		return unixPaths
+	}
+
+	// windows exception
+	if os.PathSeparator == '\\' {
+		winPaths := make([]string, len(unixPaths))
+
+		for i := range unixPaths {
+			winPaths[i] = strings.ReplaceAll(unixPaths[i], "/", `\`)
+		}
+
+		return winPaths
+	}
+
+	return unixPaths
+}
+
 func setupExpectedFilePaths(rootDirPath string) []string {
-	expectedFiles := []string{
+	return adaptPathsForOS([]string{
 		path.Join(rootDirPath, "1.a"),
 		path.Join(rootDirPath, "2.a"),
 		path.Join(rootDirPath, "3.b"),
@@ -80,20 +100,30 @@ func setupExpectedFilePaths(rootDirPath string) []string {
 		path.Join(rootDirPath, "C", "E", "1.e"),
 		path.Join(rootDirPath, "C", "E", "2.e"),
 		path.Join(rootDirPath, "C", "E", "3.f"),
-	}
-
-	// windows exception
-	if os.PathSeparator == '\\' {
-		for i := range expectedFiles {
-			expectedFiles[i] = strings.ReplaceAll(expectedFiles[i], "/", `\`)
-		}
-	}
-
-	return expectedFiles
+	})
 }
 
 func tearDownTestFileSystem(rootDirPath string) error {
 	return os.RemoveAll(rootDirPath)
+}
+
+func getAllFilesIn(dirPath string, filter *regexp.Regexp) []string {
+	fileChan := make(chan string)
+
+	// because of unbuffered channel use has to run asynchronously
+	go func() {
+		recurseThroughDirs(dirPath, filter, fileChan)
+
+		close(fileChan)
+	}()
+
+	observedFiles := make([]string, 0, 15)
+
+	for f := range fileChan {
+		observedFiles = append(observedFiles, f)
+	}
+
+	return observedFiles
 }
 
 func TestRecurseThroughDirs(t *testing.T) {
@@ -112,21 +142,26 @@ func TestRecurseThroughDirs(t *testing.T) {
 	}
 
 	expectedFiles := setupExpectedFilePaths(rootDirPath)
+	observedFiles := getAllFilesIn(rootDirPath, regexp.MustCompile(`\d.[a-f]$`))
 
-	fileChan := make(chan string)
-
-	// because of unbuffered channel use has to run asynchronously
-	go func() {
-		recurseThroughDirs(rootDirPath, regexp.MustCompile(`\d.[a-f]$`), fileChan)
-
-		close(fileChan)
-	}()
-
-	observedFiles := make([]string, 0, 15)
-
-	for f := range fileChan {
-		observedFiles = append(observedFiles, f)
+	if !slices.Equal(observedFiles, expectedFiles) {
+		t.Fatalf("want %s files, have %s files", strings.Join(expectedFiles, ";"), strings.Join(observedFiles, ";"))
 	}
+}
+
+func TestRecurseThroughDirsOnProjectDirectory(t *testing.T) {
+	currentDirAbsolutePath, _ := filepath.Abs(".")
+	expectedFiles := adaptPathsForOS([]string{
+		path.Join(currentDirAbsolutePath, "asyncprocessing.go"),
+		path.Join(currentDirAbsolutePath, "asyncprocessing_test.go"),
+		path.Join(currentDirAbsolutePath, "fileprocessing.go"),
+		path.Join(currentDirAbsolutePath, "fileprocessing_test.go"),
+		path.Join(currentDirAbsolutePath, "main.go"),
+		path.Join(currentDirAbsolutePath, "tabconv/tabconverter.go"),
+		path.Join(currentDirAbsolutePath, "tabconv/tabconverter_test.go"),
+	})
+
+	observedFiles := getAllFilesIn(currentDirAbsolutePath, regexp.MustCompile(`\.go$`))
 
 	if !slices.Equal(observedFiles, expectedFiles) {
 		t.Fatalf("want %s files, have %s files", strings.Join(expectedFiles, ";"), strings.Join(observedFiles, ";"))
