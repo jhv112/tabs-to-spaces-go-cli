@@ -13,13 +13,21 @@ convert tabs to spaces, is not lost on me.
 
 ## Warning
 
-Program has never been run.
-It compiles, and there are tests -- that's all I can guarantee.
+The program **should** work properly; however, even when functioning properly,
+this program **can** demonstrate [Uncle Ben's proverb][^1] and mangle your
+files, if great care is not taken.
+
+For a concrete account of what has once gone wrong, go read the notes section
+in the [dog-fooding script](dogfood.ps1) as well as the considerations being
+made in the current version of the [to-do list](todo.md).
 
 ## Usage
 
-See [USAGE](USAGE).
+See [USAGE](USAGE).  
+Example usage can be found in the [dog-fooding script](dogfood.ps1).
 
 ## Licence
 
-Something MIT-ish, I guess. ¯\\_(ツ)_/¯
+This project is licensed under the terms of the [MIT license](LICENCE).
+
+[^1]: [With great power comes great responsibility.](https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility)

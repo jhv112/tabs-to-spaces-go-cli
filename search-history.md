@@ -2,8 +2,8 @@
 
 Some people see great shame in needing, to look up basic information on how to
 develop.
-To show that I too put trousers on one leg at a time (German equivalent: "Ich
-koche auch nur mit Wasser", "I too only boil (things) with water"), my search
+To show, that I too put trousers on one leg at a time (German equivalent: "Ich
+koche auch nur mit Wasser", "I too only boil (things) in water"), my search
 history during development:
 
 - [Command Line Interface Guidelines](https://clig.dev/)
@@ -56,3 +56,22 @@ history during development:
 - [go - Forcing goroutines into the same thread - Stack Overflow](https://stackoverflow.com/questions/1880262)
 - [ErrorLevel equivalent - PowerShell Team](https://devblogs.microsoft.com/powershell/errorlevel-equivalent)
 - [Teleprinter - Wikipedia](https://en.wikipedia.org/wiki/Teleprinter#History)
+- [about_Comment_Based_Help - PowerShell | Microsoft Learn](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comment_based_help)
+- [Syntax of Comment-Based Help - PowerShell | Microsoft Learn](https://learn.microsoft.com/en-us/powershell/scripting/developer/help/syntax-of-comment-based-help)
+- [Documentation and Comments | PowerShell Practice and Style](https://poshcode.gitbook.io/powershell-practice-and-style/style-guide/documentation-and-comments)
+- [to-do - Wiktionary, the free dictionary](https://en.wiktionary.org/wiki/to-do)
+- [hyphens - What are the rules for capitalizing the second part of a hyphenated word in a title? - English Language Learners Stack Exchange](https://ell.stackexchange.com/questions/288002/what-are-the-rules-for-capitalizing-the-second-part-of-a-hyphenated-word-in-a-ti)
+- [Adding a license to a repository - GitHub Docs](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository)
+- [Licensing a repository - GitHub Docs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)
+- [MIT License | Choose a License](https://choosealicense.com/licenses/mit/)
+- [FileLock/LICENSE at main · R3dByt3/FileLock](https://github.com/R3dByt3/FileLock/blob/main/LICENSE)
+- [licence - Wiktionary, the free dictionary](https://en.wiktionary.org/wiki/licence)
+- [With great power comes great responsibility - Wikipedia](https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility)
+- [Samuel Johnson - Wikipedia](https://en.wikipedia.org/wiki/Samuel_Johnson)
+- [Noah Webster - Wikipedia](https://en.wikipedia.org/wiki/Noah_Webster)
+
+## List Item Template
+
+```javascript
+`- [${ document.getElementsByTagName('title')[0].innerHTML }](${ document.URL })`
+```
