@@ -14,7 +14,7 @@ convert tabs to spaces, is not lost on me.
 ## Warning
 
 The program **should** work properly; however, even when functioning properly,
-this program **can** demonstrate [Uncle Ben's proverb][^1] and mangle your
+this program **can** demonstrate Uncle Ben's proverb[^1] and mangle your
 files, if great care is not taken.
 
 For a concrete account of what has once gone wrong, go read the notes section
